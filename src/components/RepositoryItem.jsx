@@ -6,7 +6,7 @@ import Text from "./Text";
 const styles = StyleSheet.create({
   container: {
     padding: 8,
-    backgroundColor: theme.colors.textOnBackground,
+    backgroundColor: theme.colors.backgroundOnBackground,
   },
   image: {
     width: 50,
