@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, TextInput, View } from 'react-native';
 import theme from '../theme';
 import * as yup from 'yup';
 import useSignIn from '../hooks/useSignIn';
+import { useNavigate } from 'react-router-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -83,14 +84,15 @@ const SignInForm = ({onSubmit}) => {
 
 const SignIn = () => {
 const [signIns] = useSignIn();
+const navigate = useNavigate();
 
   const onSubmit = async (values) => {
-    console.log(values);
     const { username, password } = values;
 
     try {
       const { data } = await signIns({ username, password });
-      console.log('signIn data', data);
+      //console.log('signIn data', data);
+      navigate('/');
     } catch (error) {
       console.log('error at signIn', error);
     }
