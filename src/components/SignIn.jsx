@@ -3,6 +3,7 @@ import Text from './Text';
 import { Pressable, StyleSheet, TextInput, View } from 'react-native';
 import theme from '../theme';
 import * as yup from 'yup';
+import useSignIn from '../hooks/useSignIn';
 
 const styles = StyleSheet.create({
   container: {
@@ -81,7 +82,19 @@ const SignInForm = ({onSubmit}) => {
 };
 
 const SignIn = () => {
-  const onSubmit = (values) => console.log(values);
+const [signIns] = useSignIn();
+
+  const onSubmit = async (values) => {
+    console.log(values);
+    const { username, password } = values;
+
+    try {
+      const { data } = await signIns({ username, password });
+      console.log('signIn data', data);
+    } catch (error) {
+      console.log('error at signIn', error);
+    }
+  }
    
   return <SignInForm onSubmit={onSubmit} />;
 };

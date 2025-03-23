@@ -4,12 +4,15 @@ import Main from './src/components/Main';
 import { ApolloProvider } from '@apollo/client';
 import createApolloClient from './src/utils/apolloClient';
 import Constants from 'expo-constants';
+import AuthStorage from './src/utils/AuthStorage';
+import AuthStorageContext from './src/contexts/AuthStorageContext';
+
+const authStorage = new AuthStorage();
+const apolloClient = createApolloClient(authStorage);
 
 
-const apolloClient = createApolloClient();
 const App = () => {
-console.log('extra variables', Constants.expoConfig.extra);
-
+  console.log('extra variables', Constants.expoConfig.extra);
 
   return (
     <>
@@ -18,7 +21,9 @@ console.log('extra variables', Constants.expoConfig.extra);
           v7_relativeSplatPath: true,
       }}>
         <ApolloProvider client={apolloClient}>
-          <Main />
+          <AuthStorageContext.Provider value={authStorage}>
+            <Main />
+          </AuthStorageContext.Provider>
         </ApolloProvider>
       </NativeRouter>
       <StatusBar style="auto" />
