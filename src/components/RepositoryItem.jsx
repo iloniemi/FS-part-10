@@ -41,37 +41,38 @@ const styles = StyleSheet.create({
   }
 });
 
-const RepositoryItem = ({item}) => {
+const RepositoryItem = ({item, showUrlButton}) => {  //showurl prop?
   return (
-    <View style={styles.container}>
+    <View testID="repositoryItem" style={styles.container}>
       <View style={styles.containerTop}>
         <Image style={styles.image} source={{uri: item.ownerAvatarUrl}} />
         <View style={styles.containerText}>
-          <Text fontWeight="bold">{item.fullName}</Text>
-          <Text color="textSecondary">{item.description}</Text>
+          <Text testID="fullName" fontWeight="bold">{item.fullName}</Text>
+          <Text testID="description" color="textSecondary">{item.description}</Text>
           <View style={styles.containerLanguages}>
-            <NativeText style={styles.language}>{item.language}</NativeText>
+            <NativeText testID="language" style={styles.language}>{item.language}</NativeText>
           </View>
         </View>
       </View>
       <View style={styles.containerStats}>
         <View>
-          <Text fontWeight="bold" >{numberToText(item.stargazersCount)}</Text>
+          <Text testID="stars" fontWeight="bold" >{numberToText(item.stargazersCount)}</Text>
           <Text color="textSecondary">Stars</Text>
         </View>
         <View>
-          <Text fontWeight="bold" >{numberToText(item.forksCount)}</Text>
+          <Text testID="forks" fontWeight="bold" >{numberToText(item.forksCount)}</Text>
           <Text color="textSecondary">Forks</Text>
         </View>
         <View>
-          <Text fontWeight="bold" >{numberToText(item.reviewCount)}</Text>
+          <Text testID="reviews" fontWeight="bold" >{numberToText(item.reviewCount)}</Text>
           <Text color="textSecondary">Reviews</Text>
         </View>
         <View>
-          <Text fontWeight="bold" >{numberToText(item.ratingAverage)}</Text>
+          <Text testID="rating" fontWeight="bold" >{numberToText(item.ratingAverage)}</Text>
           <Text color="textSecondary">Rating</Text>
         </View>
       </View>
+        {showUrlButton && <Text>Show on github</Text>}
     </View>
   );
 };

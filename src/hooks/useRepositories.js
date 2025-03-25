@@ -11,7 +11,7 @@ const useRepositories = () => {
   const repositories = !loading ? data.repositories : undefined;
 
   //should work
-  const refetch = () => client.refetchQueries({ query: GET_REPOSITORIES });
+  const refetch = () => client.refetchQueries([{ query: GET_REPOSITORIES }]);
 
   return { repositories, loading, refetch };
 };

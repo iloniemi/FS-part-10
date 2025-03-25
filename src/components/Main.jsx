@@ -2,8 +2,9 @@ import { Text, StyleSheet, View, Platform } from 'react-native';
 import RepositoryList from './RepositoryList';
 import AppBar from './AppBar';
 import theme from '../theme';
-import { Navigate, Route, Routes } from 'react-router-native';
+import { Link, Navigate, Route, Routes } from 'react-router-native';
 import SignIn from './SignIn';
+import Repository from './Repository';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,12 +18,14 @@ const Main = () => {
   return (
     <View style={styles.container}>
       <AppBar />
+      <Link to='/repositories/jaredpalmer.formik'><Text>Repoon</Text></Link>
       <Routes>
         <Route path="/">
           <Route index element={<RepositoryList />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
         <Route path="/signin" element={<SignIn />} />
+        <Route path='/repositories/:id' element={<Repository />} />
       </Routes>
     </View>
   );
