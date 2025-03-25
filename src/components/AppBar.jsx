@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     display: 'flex',
     flexDirection: 'row',
-    gap: 10,
+    gap: 20,
     flexWrap: 'nowrap',
     justifyContent: 'flex-start',
     alignContent: 'space-between',
@@ -47,9 +47,12 @@ const AppBar = () => {
         <AppBarTab style={styles.tab} target='/'>Repositories</AppBarTab>
         {
           data && data.me 
-          ? <Pressable onPress={signOut} >
+          ? <>
+            <AppBarTab style={styles.tab} target='/create-review'>Create a review</AppBarTab>
+            <Pressable onPress={signOut} >
               <Text style={styles.tab}>Sign out</Text>
             </Pressable>
+          </>
           : <AppBarTab style={styles.tab} target='/signin'>Sign in</AppBarTab>
         }
       </ScrollView>

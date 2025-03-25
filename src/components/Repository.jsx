@@ -4,7 +4,7 @@ import useRepository from "../hooks/useRepository";
 import RepositoryItem from "./RepositoryItem";
 import { FlatList, StyleSheet, View } from "react-native";
 import theme from "../theme";
-import { parse, format } from "date-fns";
+import { format } from "date-fns";
 
 
 const styles = StyleSheet.create({
@@ -67,8 +67,6 @@ const Repository = () => {
 
   if (loading) return <Text>Loading repository</Text>
   const reviews = repository.reviews.edges.map( edge => edge.node );
-  console.log('re', reviews[0]);
-  
   
   return (
     <FlatList
