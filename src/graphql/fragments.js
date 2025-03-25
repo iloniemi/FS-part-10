@@ -14,3 +14,19 @@ export const REPOSITORY_BASIC_DATA = gql`
     url
   }
 `
+
+export const REVIEWCONNECTION_DATA = gql`
+  fragment ReviewConnectionData on ReviewConnection {
+    edges {
+      node {
+        id
+        createdAt
+        rating
+        text
+        user {
+          username
+        }
+      }
+    }
+  }
+`
