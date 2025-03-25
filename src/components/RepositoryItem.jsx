@@ -1,7 +1,9 @@
-import { Image, StyleSheet, Text as NativeText, View } from "react-native";
+import { Image, StyleSheet, Text as NativeText, View, Pressable } from "react-native";
 import theme from "../theme";
 import { numberToText } from "../utils";
 import Text from "./Text";
+import * as Linking from 'expo-linking';
+
 
 const styles = StyleSheet.create({
   container: {
@@ -38,10 +40,21 @@ const styles = StyleSheet.create({
   containerStats: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+  },
+  urlButton: {
+    backgroundColor: theme.colors.primary,
+    color: theme.colors.textOnPrimary,
+    flexGrow: 0,
+    borderRadius: 3,
+    padding: 4,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: theme.fontSizes.subheading,
+    marginVertical: 8,
   }
 });
 
-const RepositoryItem = ({item, showUrlButton}) => {  //showurl prop?
+const RepositoryItem = ({item, showUrlButton}) => {
   return (
     <View testID="repositoryItem" style={styles.container}>
       <View style={styles.containerTop}>
@@ -72,7 +85,11 @@ const RepositoryItem = ({item, showUrlButton}) => {  //showurl prop?
           <Text color="textSecondary">Rating</Text>
         </View>
       </View>
-        {showUrlButton && <Text>Show on github</Text>}
+        {showUrlButton && <Pressable onPress={() => Linking.openURL(item.url)} >
+            <NativeText style={styles.urlButton}>
+              Open in GitHub
+            </NativeText>
+          </Pressable>}
     </View>
   );
 };

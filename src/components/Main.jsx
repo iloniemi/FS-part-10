@@ -18,7 +18,6 @@ const Main = () => {
   return (
     <View style={styles.container}>
       <AppBar />
-      <Link to='/repositories/jaredpalmer.formik'><Text>Repoon</Text></Link>
       <Routes>
         <Route path="/">
           <Route index element={<RepositoryList />} />

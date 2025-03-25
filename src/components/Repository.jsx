@@ -6,7 +6,6 @@ import RepositoryItem from "./RepositoryItem";
 const Repository = () => {
   const id = useParams().id;
   const { repository, loading } = useRepository(id);
-  console.log('repo', repository);
 
   if (loading) return <Text>Loading repository</Text>
 
