@@ -3,6 +3,8 @@ import Text from "./Text"
 import theme from "../theme";
 import { useFormik } from "formik";
 import * as yup from 'yup';
+import useCreateReview from "../hooks/useCreateReview";
+import { useNavigate } from "react-router-native";
 
 const styles = StyleSheet.create({
   container: {
@@ -35,21 +37,21 @@ const styles = StyleSheet.create({
 });
 
 const initialValues = {
-  owner: '',
-  repository: '',
+  ownerName: '',
+  repositoryName: '',
   rating: '',
-  review: '',
+  text: '',
 };
 
 const validationSchema = yup.object().shape({
-  owner: yup.string().required('Owner\'s usernamename is required'),
-  repository: yup.string().required('Repository name is required'),
+  ownerName: yup.string().required('Owner\'s usernamename is required'),
+  repositoryName: yup.string().required('Repository name is required'),
   rating: yup.number('Rating should be an integer from 0 to 100')
     .required('Rating is required')
     .positive('Lowest allowed rating is 0')
     .integer('Rating should be an integer')
     .max(100, 'Highest allowed rating is 100'),
-  review: yup.string(),
+  text: yup.string(),
 });
 
 const ReviewFormContainer = ({ onSubmit }) => {
@@ -61,41 +63,44 @@ const ReviewFormContainer = ({ onSubmit }) => {
   return (
     <View style={styles.container} >
       <TextInput
-      placeholder='Repository owner'
-      value={formik.values.owner}
-      onChangeText={formik.handleChange('owner')}
-      style={[styles.textField, formik.touched.owner && formik.errors.owner && styles.textFieldError]}
+        placeholder='Repository owner'
+        value={formik.values.ownerName}
+        onChangeText={formik.handleChange('ownerName')}
+        style={[styles.textField, formik.touched.ownerName && formik.errors.ownerName && styles.textFieldError]}
       />
-      {formik.touched.owner && formik.errors.owner && (
-        <Text style={{ color: 'red' }}>{formik.errors.owner}</Text>
+      {formik.touched.ownerName && formik.errors.ownerName && (
+        <Text style={{ color: 'red' }}>{formik.errors.ownerName}</Text>
       )}
       <TextInput
-      placeholder='Repository name'
-      value={formik.values.repository}
-      onChangeText={formik.handleChange('repository')}
-      style={[styles.textField, formik.touched.repository && formik.errors.repository && styles.textFieldError]}
-      />
-      {formik.touched.repository && formik.errors.repository && (
-        <Text style={{ color: 'red' }}>{formik.errors.repository}</Text>
+        placeholder='Repository name'
+        value={formik.values.repositoryName}
+        onChangeText={formik.handleChange('repositoryName')}
+        style={[styles.textField, formik.touched.repositoryName && formik.errors.repositoryName && styles.textFieldError]}
+        />
+      {formik.touched.repositoryName && formik.errors.repositoryName && (
+        <Text style={{ color: 'red' }}>{formik.errors.repositoryName}</Text>
       )}
       <TextInput
-      placeholder='Rating'
-      value={formik.values.rating}
-      onChangeText={formik.handleChange('rating')}
-      inputMode='numeric'
-      style={[styles.textField, formik.touched.rating && formik.errors.rating && styles.textFieldError]}
+        placeholder='Rating'
+        value={formik.values.rating}
+        onChangeText={formik.handleChange('rating')}
+        inputMode='numeric'
+        style={[styles.textField, formik.touched.rating && formik.errors.rating && styles.textFieldError]}
       />
       {formik.touched.rating && formik.errors.rating && (
         <Text style={{ color: 'red' }}>{formik.errors.rating}</Text>
       )}
       <TextInput
-      placeholder='Review'
-      value={formik.values.review}
-      onChangeText={formik.handleChange('review')}
-      multiline
-      style={styles.textField}
+        placeholder='Review'
+        value={formik.values.text}
+        onChangeText={formik.handleChange('text')}
+        multiline
+        style={styles.textField}
       />
-      <Pressable style={styles.button} onPress={formik.handleSubmit} >
+      {formik.touched.text && formik.errors.text && (
+        <Text style={{ color: 'red' }}>{formik.errors.text}</Text>
+      )}
+      <Pressable style={styles.button} onPress={ formik.handleSubmit } >
         <Text style={styles.buttonText}>Create review</Text>
       </Pressable>
     </View>
@@ -103,11 +108,19 @@ const ReviewFormContainer = ({ onSubmit }) => {
 };
 
 const ReviewForm = () => {
+  const [createReview, result] = useCreateReview();
+  const navigate = useNavigate();
 
-  const onSubmit = (values) => {
-    console.log('values', values);
+  const onSubmit = async (values) => {
+    try {
+      const { data } = await createReview(values);
+      console.log('createReview data', data);
+      navigate(`/repositories/${data.createReview.repositoryId}`);
+    } catch (error) {
+      console.log('error at createReview', error);
+    }
+  }
     
-  };
   return  <ReviewFormContainer onSubmit={onSubmit} />;
 };
 
