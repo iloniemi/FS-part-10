@@ -1,8 +1,8 @@
-import { Text, StyleSheet, View, Platform } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import RepositoryList from './RepositoryList';
 import AppBar from './AppBar';
 import theme from '../theme';
-import { Link, Navigate, Route, Routes } from 'react-router-native';
+import { Navigate, Route, Routes } from 'react-router-native';
 import SignIn from './SignIn';
 import Repository from './Repository';
 import ReviewForm from './ReviewForm';
