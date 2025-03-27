@@ -1,7 +1,7 @@
 import { useApolloClient, useQuery } from '@apollo/client';
 import { GET_REPOSITORIES } from '../graphql/queries';
 
-const useRepositories = (sortingMethod) => {
+const useRepositories = (sortingMethod, searchKeyword='') => {
   const client = useApolloClient();
   const variables = {};
   switch (sortingMethod) {
@@ -18,6 +18,9 @@ const useRepositories = (sortingMethod) => {
     default:
       break;
   }
+  if (searchKeyword !== '') variables.searchKeyword = searchKeyword;
+
+
   const { data, loading, error } = useQuery(GET_REPOSITORIES, {
     fetchPolicy: 'cache-and-network',
     variables
