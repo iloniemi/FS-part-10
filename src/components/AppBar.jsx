@@ -52,6 +52,7 @@ const AppBar = () => {
           data && data.me 
           ? <>
             <AppBarTab style={styles.tab} target='/create-review'>Create a review</AppBarTab>
+            <AppBarTab style={styles.tab} target='/myreviews'>My reviews</AppBarTab>
             <Pressable onPress={signOut} >
               <Text style={styles.tab}>Sign out</Text>
             </Pressable>
